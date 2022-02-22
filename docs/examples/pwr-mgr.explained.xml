@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xfce4-power-manager" version="1.0">
+  <property name="xfce4-power-manager" type="empty">
+
+    <property name="power-button-action" type="uint" value="0" hint="
+      0 = Do nothing
+          * ATTN: This can probably not protect against hardware power-off
+            due to long press. Consider a physical barrier on the button,
+            or disconnecting the cable. (How do you start from power-off?)
+      1 = Suspend
+      2 = Hibernate
+      3 = Ask
+      4 = Shutdown
+      "/>
+    <property name="battery-button-action" type="uint" value="0"/>
+    <property name="sleep-button-action" type="uint" value="0"/>
+    <property name="hibernate-button-action" type="uint" value="0"/>
+
+    <property name="logind-handle-lid-switch" type="bool" value="false" hint="
+      Probably whether xfce4-power-manager shall tell logind that it wants
+      to be responsible for the lid switch action.
+      The GUI config sets this to true if and only if any of lid-action-on-*
+      is set to 'suspend'. If none are 'suspend' (e.g. because both are
+      'hibernate') it sets false.
+      "/>
+    <property name="lid-action-on-ac" type="uint" value="0" hint="
+      0 = Switch off display
+      1 = Suspend      \___ for these, screen locking depends on security
+      2 = Hibernate    /    setting 'lock-screen-suspend-hibernate'.
+      3 = Lock screen
+      "/>
+    <property name="lid-action-on-battery" type="uint" value="0"/>
+    <property name="lock-screen-suspend-hibernate" type="bool" value="false"/>
+
+    <property name="handle-brightness-keys" type="bool" value="true" hint="
+      Defaulting to true, because some notebooks don't have a working fallback
+      mechanism to handle them in hardware."/>
+    <property name="brightness-switch" type="int" value="0" hint="??"/>
+    <property name="brightness-switch-restore-on-exit" type="int" value="0" hint="??"/>
+
+    <property name="dpms-enabled" type="bool" value="true" hint="
+      If disabled, the screen will be blanked after some time. Probably if
+      no program claims responsibility for managing display power, something
+      in the graphics stack will apply defaults."/>
+
+    <property name="brightness-on-ac" type="uint" value="0"
+      unit="sec" hint="
+      Delay in seconds after which to dim the screen brightness.
+      '0' seems to be ignored and the default is used instead, probably
+      because 0 if false-y. The magic value for 'never' is m-1, where m
+      is the lowest non-zero setting available on the slider (see below).
+      Very unfortunate design. Thus let's just keep '0' for when xfce will
+      finally get smarter, and let's instead set the dimmed brightness to 100%.
+      (Values for Ubuntu 16.04.6 LTS xenial, Xfce 4.12: default=120, m=10)
+      " />
+    <property name="brightness-level-on-ac" type="uint" value="100" unit="%"/>
+    <property name="blank-on-ac" type="int" value="0" hint="delay" unit="min" hint="
+      In contrast to brightness-on-ac, with dpms times, 0 = Never."/>
+    <property name="dpms-on-ac-sleep" type="uint" value="0" unit="min"/>
+    <property name="dpms-on-ac-off" type="uint" value="0" unit="min"/>
+    <property name="inactivity-on-ac" type="uint" value="7"/>
+    <property name="inactivity-on-ac" type="uint" value="14"
+      unit="min" hint="
+      Delay in minutes after which to powersave the whole system.
+      Uses a similar m-1 magic value for 'Never' as 'brightness-on-ac' does,
+      but with m=15 in Ubuntu focal.
+      Unfortunately, 'inactivity-sleep-mode-on-ac' does not support a
+      'Do nothing' value, only values 1 and 2 from 'power-button-action'.
+      "/>
+    <property name="inactivity-sleep-mode-on-ac" type="uint" value="1"/>
+
+    <property name="brightness-on-battery" type="uint" value="0" hint="
+      see 'brightness-on-ac' above" />
+    <property name="brightness-level-on-battery" type="uint" value="100"/>
+    <property name="blank-on-battery" type="int" value="0" hint="delay" unit="min"/>
+    <property name="dpms-on-battery-sleep" type="uint" value="0" unit="min"/>
+    <property name="dpms-on-battery-off" type="uint" value="0" unit="min"/>
+    <property name="inactivity-on-battery" type="uint" value="14"/>
+    <property name="inactivity-sleep-mode-on-battery" type="uint" value="1"/>
+
+    <property name="critical-power-level" type="uint" value="10" unit="%"/>
+    <property name="critical-power-action" type="uint" value="0" hint="
+      like power-button-action"/>
+
+    <property name="show-tray-icon" type="bool" value="false"/>
+    <property name="general-notification" type="bool" value="false"/>
+
+  </property>
+</channel>
